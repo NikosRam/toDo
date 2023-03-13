@@ -29,7 +29,7 @@ exports.createToDo = async (req, res) => {
       },
     });
   } catch (err) {
-    res.status(400).json({
+    res.status(404).json({
       status: "fail",
       message: "error",
     });
@@ -50,16 +50,25 @@ exports.updateToDo = async (req, res) => {
       },
     });
   } catch (err) {
-    res.status(400).json({
+    res.status(404).json({
       status: "fail",
       message: "error",
     });
   }
 };
 
-exports.deleteToDo = (req, res) => {
-  res.status(204).json({
-    status: "success",
-    data: null,
-  });
+exports.deleteToDo = async (req, res) => {
+  try {
+    await ToDo.findByIdAndDelete(req.params.id);
+
+    res.status(204).json({
+      status: "success",
+      data: null,
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: "fail",
+      message: "error",
+    });
+  }
 };
