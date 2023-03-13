@@ -36,13 +36,25 @@ exports.createToDo = async (req, res) => {
   }
 };
 
-exports.updateToDo = (req, res) => {
-  res.status(200).json({
-    status: "success",
-    data: {
-      tour: "Updated todo here",
-    },
-  });
+exports.updateToDo = async (req, res) => {
+  try {
+    const toDo = await ToDo.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true,
+    });
+
+    res.status(200).json({
+      status: "success",
+      data: {
+        toDo,
+      },
+    });
+  } catch (err) {
+    res.status(400).json({
+      status: "fail",
+      message: "error",
+    });
+  }
 };
 
 exports.deleteToDo = (req, res) => {
