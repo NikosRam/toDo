@@ -9,13 +9,22 @@ exports.getAllToDos = (req, res) => {
   });
 };
 
-exports.createToDo = (req, res) => {
-  res.status(201).json({
-    status: "success",
-    data: {
-      message: "toDo created",
-    },
-  });
+exports.createToDo = async (req, res) => {
+  try {
+    const newToDo = await ToDo.create(req.body);
+
+    res.status(201).json({
+      status: "success",
+      data: {
+        toDo: newToDo,
+      },
+    });
+  } catch (err) {
+    res.status(400).json({
+      status: "fail",
+      message: "error",
+    });
+  }
 };
 
 exports.updateToDo = (req, res) => {
