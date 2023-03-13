@@ -1,12 +1,21 @@
 const ToDo = require("../models/toDoModel");
 
-exports.getAllToDos = (req, res) => {
-  res.status(200).json({
-    status: "success",
-    data: {
-      message: "here are the toDos",
-    },
-  });
+exports.getAllToDos = async (req, res) => {
+  try {
+    const toDos = await ToDo.find();
+
+    res.status(200).json({
+      status: "success",
+      data: {
+        toDos,
+      },
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: "fail",
+      message: "error",
+    });
+  }
 };
 
 exports.createToDo = async (req, res) => {
