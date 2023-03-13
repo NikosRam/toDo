@@ -1,3 +1,5 @@
+const ToDo = require("../models/toDoModel");
+
 exports.getAllToDos = (req, res) => {
   res.status(200).json({
     status: "success",
