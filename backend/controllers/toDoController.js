@@ -1,8 +1,19 @@
 const ToDo = require("../models/toDoModel");
+const APIFeatures = require("../utils/apiFeatures");
+
+exports.aliasCompletedToDos = (req, res, next) => {
+  req.query.completed = true;
+  next();
+};
 
 exports.getAllToDos = async (req, res) => {
   try {
-    const toDos = await ToDo.find();
+    const features = new APIFeatures(ToDo.find(), req.query)
+      .filter()
+      .sort()
+      .limit()
+      .paginate();
+    const toDos = await features.query;
 
     res.status(200).json({
       status: "success",

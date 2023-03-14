@@ -4,6 +4,10 @@ const toDoController = require("../controllers/toDoController");
 const router = express.Router();
 
 router
+  .route("/completed")
+  .get(toDoController.aliasCompletedToDos, toDoController.getAllToDos);
+
+router
   .route("/")
   .get(toDoController.getAllToDos)
   .post(toDoController.createToDo);

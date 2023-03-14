@@ -4,6 +4,7 @@ const toDoSchema = new mongoose.Schema({
   title: {
     type: String,
     required: [true, "A toDo must have a name"],
+    trim: true,
   },
   date: Date,
   completed: {
