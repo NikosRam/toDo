@@ -42,7 +42,7 @@ exports.createToDo = async (req, res) => {
   } catch (err) {
     res.status(404).json({
       status: "fail",
-      message: "error",
+      message: err,
     });
   }
 };
@@ -75,6 +75,52 @@ exports.deleteToDo = async (req, res) => {
     res.status(204).json({
       status: "success",
       data: null,
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: "fail",
+      message: "error",
+    });
+  }
+};
+
+exports.getCurrentDayToDos = async (req, res) => {
+  try {
+    const today = new Date();
+
+    const start = new Date(
+      today.getFullYear(),
+      today.getMonth(),
+      today.getDate(),
+      2,
+      0,
+      0,
+      0
+    );
+    const end = new Date(
+      today.getFullYear(),
+      today.getMonth(),
+      today.getDate(),
+      25,
+      59,
+      59,
+      999
+    );
+
+    const toDosToday = await ToDo.aggregate([
+      {
+        $match: {
+          date: {
+            $gte: start,
+            $lte: end,
+          },
+        },
+      },
+    ]);
+
+    res.status(200).json({
+      status: "success",
+      data: toDosToday,
     });
   } catch (err) {
     res.status(404).json({

@@ -7,6 +7,8 @@ router
   .route("/completed")
   .get(toDoController.aliasCompletedToDos, toDoController.getAllToDos);
 
+router.route("/todos-today").get(toDoController.getCurrentDayToDos);
+
 router
   .route("/")
   .get(toDoController.getAllToDos)
