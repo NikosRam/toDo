@@ -1,6 +1,7 @@
 const ToDo = require("../models/toDoModel");
 const APIFeatures = require("../utils/apiFeatures");
 const catchAsync = require("../utils/catchAsync");
+const AppError = require("../utils/appError");
 
 exports.aliasCompletedToDos = (req, res, next) => {
   req.query.completed = true;
@@ -40,6 +41,10 @@ exports.updateToDo = catchAsync(async (req, res, next) => {
     runValidators: true,
   });
 
+  if (!toDo) {
+    return next(new AppError("No toDo specified for the given ID", 404));
+  }
+
   res.status(200).json({
     status: "success",
     data: {
@@ -49,7 +54,11 @@ exports.updateToDo = catchAsync(async (req, res, next) => {
 });
 
 exports.deleteToDo = catchAsync(async (req, res, next) => {
-  await ToDo.findByIdAndDelete(req.params.id);
+  const toDo = await ToDo.findByIdAndDelete(req.params.id);
+
+  if (!toDo) {
+    return next(new AppError("No toDo specified for the given ID", 404));
+  }
 
   res.status(204).json({
     status: "success",
