@@ -58,37 +58,14 @@ exports.deleteToDo = catchAsync(async (req, res, next) => {
 });
 
 exports.getCurrentDayToDos = catchAsync(async (req, res, next) => {
-  const today = new Date();
+  const startOfToday = new Date();
+  startOfToday.setHours(0, 0, 0, 0);
+  const endOfToday = new Date();
+  endOfToday.setHours(23, 59, 59, 999);
 
-  const start = new Date(
-    today.getFullYear(),
-    today.getMonth(),
-    today.getDate(),
-    0,
-    0,
-    0,
-    0
-  );
-  const end = new Date(
-    today.getFullYear(),
-    today.getMonth(),
-    today.getDate(),
-    23,
-    59,
-    59,
-    999
-  );
-
-  const toDosToday = await ToDo.aggregate([
-    {
-      $match: {
-        date: {
-          $gte: start,
-          $lte: end,
-        },
-      },
-    },
-  ]);
+  const toDosToday = await ToDo.find({
+    dueDate: { $gte: startOfToday, $lt: endOfToday },
+  });
 
   res.status(200).json({
     status: "success",
