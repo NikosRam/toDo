@@ -6,18 +6,24 @@ const router = express.Router();
 
 router
   .route("/completed")
-  .get(toDoController.aliasCompletedToDos, toDoController.getAllToDos);
+  .get(
+    authController.protect,
+    toDoController.aliasCompletedToDos,
+    toDoController.getAllToDos
+  );
 
-router.route("/todos-today").get(toDoController.getCurrentDayToDos);
+router
+  .route("/todos-today")
+  .get(authController.protect, toDoController.getCurrentDayToDos);
 
 router
   .route("/")
   .get(authController.protect, toDoController.getAllToDos)
-  .post(toDoController.createToDo);
+  .post(authController.protect, toDoController.createToDo);
 
 router
   .route("/:id")
-  .patch(toDoController.updateToDo)
-  .delete(toDoController.deleteToDo);
+  .patch(authController.protect, toDoController.updateToDo)
+  .delete(authController.protect, toDoController.deleteToDo);
 
 module.exports = router;

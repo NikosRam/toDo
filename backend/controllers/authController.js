@@ -77,6 +77,7 @@ exports.protect = catchAsync(async (req, res, next) => {
     );
   }
 
+  req.userId = decoded.id;
   req.user = currentUser;
   next();
 });

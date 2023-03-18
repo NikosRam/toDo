@@ -9,7 +9,10 @@ exports.aliasCompletedToDos = (req, res, next) => {
 };
 
 exports.getAllToDos = catchAsync(async (req, res, next) => {
-  const features = new APIFeatures(ToDo.find(), req.query)
+  const features = new APIFeatures(
+    ToDo.find({ user: req.userId }).populate("user"),
+    req.query
+  )
     .filter()
     .sort()
     .limit()
@@ -25,7 +28,12 @@ exports.getAllToDos = catchAsync(async (req, res, next) => {
 });
 
 exports.createToDo = catchAsync(async (req, res, next) => {
-  const newToDo = await ToDo.create(req.body);
+  const toDoData = {
+    ...req.body,
+    user: req.userId,
+  };
+
+  const newToDo = await ToDo.create(toDoData);
 
   res.status(201).json({
     status: "success",
