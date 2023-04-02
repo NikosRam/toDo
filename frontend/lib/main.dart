@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/providers/auth.dart';
+import 'package:provider/provider.dart';
 
 import './screens/auth_screen.dart';
 
@@ -11,12 +13,19 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'todo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => Auth(),
+        )
+      ],
+      child: MaterialApp(
+        title: 'todo',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: const AuthScreen(),
       ),
-      home: const AuthScreen(),
     );
   }
 }

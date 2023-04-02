@@ -35,6 +35,8 @@ class _AuthScreenState extends State<AuthScreen> {
     });
     if (_authMode == AuthMode.Login) {
       // Log user in
+      await Provider.of<Auth>(context, listen: false)
+          .login(_authData['email']!, _authData['password']!);
     } else {
       // Sign user up
       await Provider.of<Auth>(context, listen: false).signup(
@@ -87,7 +89,6 @@ class _AuthScreenState extends State<AuthScreen> {
                   ),
                   TextFormField(
                     decoration: const InputDecoration(labelText: 'email'),
-                    obscureText: true,
                     onSaved: (value) {
                       _authData['email'] = value!;
                     },
