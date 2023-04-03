@@ -24,6 +24,24 @@ class _AuthScreenState extends State<AuthScreen> {
   };
   var _isLoading = false;
 
+  void _showErrorDialog(String message) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text('Error'),
+        content: Text(message),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(ctx).pop();
+            },
+            child: const Text('Okay'),
+          ),
+        ],
+      ),
+    );
+  }
+
   Future<void> _submit() async {
     if (!_formKey.currentState!.validate()) {
       // Invalid!
@@ -33,14 +51,19 @@ class _AuthScreenState extends State<AuthScreen> {
     setState(() {
       _isLoading = true;
     });
-    if (_authMode == AuthMode.Login) {
-      // Log user in
-      await Provider.of<Auth>(context, listen: false)
-          .login(_authData['email']!, _authData['password']!);
-    } else {
-      // Sign user up
-      await Provider.of<Auth>(context, listen: false).signup(
-          _authData['name']!, _authData['email']!, _authData['password']!);
+
+    try {
+      if (_authMode == AuthMode.Login) {
+        // Log user in
+        await Provider.of<Auth>(context, listen: false)
+            .login(_authData['email']!, _authData['password']!);
+      } else {
+        // Sign user up
+        await Provider.of<Auth>(context, listen: false).signup(
+            _authData['name']!, _authData['email']!, _authData['password']!);
+      }
+    } catch (error) {
+      _showErrorDialog("An error occured");
     }
     setState(() {
       _isLoading = false;
