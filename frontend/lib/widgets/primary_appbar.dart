@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../screens/add_todo_screen.dart';
+
 class PrimaryAppBar extends StatelessWidget implements PreferredSizeWidget {
   const PrimaryAppBar({
     super.key,
@@ -27,7 +29,9 @@ class PrimaryAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
       actions: [
         IconButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.of(context).pushNamed(EditToDo.routeName);
+          },
           icon: const Icon(Icons.add),
           color: Colors.black,
           iconSize: 40,

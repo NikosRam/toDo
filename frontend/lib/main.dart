@@ -5,6 +5,7 @@ import './providers/todo_list.dart';
 import './providers/auth.dart';
 import './screens/auth_screen.dart';
 import './screens/todos_overview_screen.dart';
+import 'screens/add_todo_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -30,6 +31,9 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
         ),
         home: const ToDosOverviewScreen(),
+        routes: {
+          EditToDo.routeName: (context) => const EditToDo(),
+        },
       ),
     );
   }
