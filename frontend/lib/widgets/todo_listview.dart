@@ -13,25 +13,38 @@ class ToDoListView extends StatefulWidget {
 }
 
 class _ToDoListViewState extends State<ToDoListView> {
+  var _isLoading = false;
+
   @override
   void initState() {
     super.initState();
-    Provider.of<TodoList>(context, listen: false).getAllToDos();
+    setState(() {
+      _isLoading = true;
+    });
+    Provider.of<TodoList>(context, listen: false).getAllToDos().then((_) {
+      setState(() {
+        _isLoading = false;
+      });
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     final toDoData = Provider.of<TodoList>(context);
     final toDos = toDoData.toDos;
-    return ListView.builder(
-      itemCount: toDos.length,
-      itemBuilder: (context, index) {
-        return ToDoListTile(
-          title: toDos[index].title,
-          dueDate: toDos[index].dueDate,
-          id: toDos[index].id,
-        );
-      },
-    );
+    return _isLoading
+        ? const Center(
+            child: CircularProgressIndicator(),
+          )
+        : ListView.builder(
+            itemCount: toDos.length,
+            itemBuilder: (context, index) {
+              return ToDoListTile(
+                title: toDos[index].title,
+                dueDate: toDos[index].dueDate,
+                id: toDos[index].id,
+              );
+            },
+          );
   }
 }

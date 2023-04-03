@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import 'package:provider/provider.dart';
+import '../providers/todo_list.dart';
+
 class ToDoListTile extends StatelessWidget {
   final String title;
   final DateTime dueDate;
@@ -30,8 +33,13 @@ class ToDoListTile extends StatelessWidget {
             style: const TextStyle(fontWeight: FontWeight.w400, fontSize: 17),
           ),
           trailing: IconButton(
-            icon: const Icon(Icons.edit),
-            onPressed: () {},
+            icon: const Icon(
+              Icons.delete,
+              color: Colors.red,
+            ),
+            onPressed: () {
+              Provider.of<TodoList>(context, listen: false).deleteToDo(id);
+            },
           ),
         ),
       ),
