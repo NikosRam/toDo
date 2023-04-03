@@ -24,7 +24,8 @@ class EditToDo extends StatelessWidget {
         backgroundColor: const Color.fromARGB(255, 255, 219, 112),
         iconTheme: const IconThemeData(color: Colors.black, size: 38.0),
       ),
-      body: const AddToDoForm(),
+      body: AddToDoForm(),
+      backgroundColor: const Color.fromARGB(255, 213, 209, 209),
     );
   }
 }
