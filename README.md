@@ -19,11 +19,11 @@ Check the corresponding Backend package in the Repository.
 
 ## Main Endpoints
 
-- http://127.0.0.1:8000/api/v1/users/signup POST
-- http://127.0.0.1:8000/api/v1/users/login POST
-- http://127.0.0.1:8000/api/v1/todo/ GET
-- http://127.0.0.1:8000/api/v1/todo/ POST
-- http://127.0.0.1:8000/api/v1/todo/:id DELETE
+- /api/v1/users/signup POST
+- /api/v1/users/login POST
+- /api/v1/todo/ GET
+- /api/v1/todo/ POST
+- /api/v1/todo/:id DELETE
 
 ### Those requests are triggered through interaction with the app.
 
