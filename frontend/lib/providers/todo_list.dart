@@ -24,7 +24,23 @@ class TodoList with ChangeNotifier {
               'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MmFkYTMzNzFjNGY0MWE5NDE5NGJjNiIsImlhdCI6MTY4MDUzMDEwNiwiZXhwIjoxNjg4MzA2MTA2fQ.WTrsjcTYgTl-xJDeSGnZvUeYepmCcZRtOwFGvZXMrKM'
         },
       );
-      print(json.decode(response.body));
+
+      final extractedData = json.decode(response.body) as Map<String, dynamic>;
+      final List<dynamic> extractedToDos = extractedData['data']['toDos'];
+      final List<ToDo> loadedTodos = [];
+
+      for (var i = 0; i < extractedToDos.length; i++) {
+        loadedTodos.add(
+          ToDo(
+            title: extractedToDos[i]['title'],
+            dueDate: DateTime.parse(
+              extractedToDos[i]['dueDate'],
+            ),
+          ),
+        );
+      }
+
+      _toDos = loadedTodos;
       notifyListeners();
     } catch (error) {
       rethrow;
