@@ -74,4 +74,33 @@ class TodoList with ChangeNotifier {
       rethrow;
     }
   }
+
+  Future<void> createToDo(String title) async {
+    try {
+      final url = Uri.parse("http://10.0.2.2:8000/api/v1/todo/");
+      final response = await http.post(
+        url,
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+          'Authorization':
+              'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MmFkYTMzNzFjNGY0MWE5NDE5NGJjNiIsImlhdCI6MTY4MDUzMDEwNiwiZXhwIjoxNjg4MzA2MTA2fQ.WTrsjcTYgTl-xJDeSGnZvUeYepmCcZRtOwFGvZXMrKM'
+        },
+        body: json.encode({
+          'title': title,
+        }),
+      );
+
+      final extractedData = json.decode(response.body) as Map<String, dynamic>;
+      final extractedToDo = extractedData['data']['toDo'];
+
+      _toDos.add(ToDo(
+          title: title,
+          dueDate: DateTime.parse(extractedToDo['dueDate']),
+          id: extractedToDo['_id']));
+
+      notifyListeners();
+    } catch (error) {
+      rethrow;
+    }
+  }
 }

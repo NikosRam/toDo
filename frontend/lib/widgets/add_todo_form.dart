@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../providers/todo_list.dart';
 
 class AddToDoForm extends StatefulWidget {
   AddToDoForm({
@@ -43,6 +46,9 @@ class _AddToDoFormState extends State<AddToDoForm> {
                 },
                 onFieldSubmitted: (_) {
                   _formKey.currentState?.save();
+                  Provider.of<TodoList>(context, listen: false)
+                      .createToDo(title);
+                  Navigator.of(context).pop();
                 },
               ),
             ],
