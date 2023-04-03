@@ -36,6 +36,7 @@ class TodoList with ChangeNotifier {
             dueDate: DateTime.parse(
               extractedToDos[i]['dueDate'],
             ),
+            id: extractedToDos[i]['_id'],
           ),
         );
       }

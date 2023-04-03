@@ -23,9 +23,8 @@ class Auth with ChangeNotifier {
           },
         ),
       );
-      print(json.decode(response.body));
     } catch (error) {
-      throw error;
+      rethrow;
     }
   }
 
@@ -47,9 +46,8 @@ class Auth with ChangeNotifier {
           },
         ),
       );
-      print(json.decode(response.body));
     } catch (error) {
-      throw error;
+      rethrow;
     }
   }
 }
