@@ -1,0 +1,33 @@
+import 'dart:convert';
+
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+
+import '../models/todo.dart';
+
+class TodoList with ChangeNotifier {
+  List<ToDo> _toDos = [];
+
+  List<ToDo> get toDos {
+    return _toDos;
+  }
+
+  Future<void> getAllToDos() async {
+    try {
+      final url = Uri.parse("http://10.0.2.2:8000/api/v1/todo/");
+
+      final response = await http.get(
+        url,
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+          'Authorization':
+              'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MmFkYTMzNzFjNGY0MWE5NDE5NGJjNiIsImlhdCI6MTY4MDUzMDEwNiwiZXhwIjoxNjg4MzA2MTA2fQ.WTrsjcTYgTl-xJDeSGnZvUeYepmCcZRtOwFGvZXMrKM'
+        },
+      );
+      print(json.decode(response.body));
+      notifyListeners();
+    } catch (error) {
+      rethrow;
+    }
+  }
+}
