@@ -35,6 +35,7 @@ class MyApp extends StatelessWidget {
           EditToDo.routeName: (context) => const EditToDo(),
           ToDosOverviewScreen.routeName: (context) =>
               const ToDosOverviewScreen(),
+          AuthScreen.routeName: (context) => const AuthScreen(),
         },
       ),
     );

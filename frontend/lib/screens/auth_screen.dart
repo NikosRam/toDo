@@ -7,6 +7,8 @@ import '../providers/auth.dart';
 enum AuthMode { Signup, Login }
 
 class AuthScreen extends StatefulWidget {
+  static const routeName = '/auth-screen';
+
   const AuthScreen({
     Key? key,
   }) : super(key: key);

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../screens/add_todo_screen.dart';
+import '../screens/auth_screen.dart';
 
 class PrimaryAppBar extends StatelessWidget implements PreferredSizeWidget {
   const PrimaryAppBar({
@@ -22,7 +23,9 @@ class PrimaryAppBar extends StatelessWidget implements PreferredSizeWidget {
       elevation: 8,
       backgroundColor: const Color.fromARGB(255, 255, 219, 112),
       leading: IconButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.of(context).pushReplacementNamed(AuthScreen.routeName);
+        },
         icon: const Icon(Icons.exit_to_app),
         color: Colors.black,
         iconSize: 35,
