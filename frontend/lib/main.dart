@@ -30,9 +30,11 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: const ToDosOverviewScreen(),
+        home: const AuthScreen(),
         routes: {
           EditToDo.routeName: (context) => const EditToDo(),
+          ToDosOverviewScreen.routeName: (context) =>
+              const ToDosOverviewScreen(),
         },
       ),
     );

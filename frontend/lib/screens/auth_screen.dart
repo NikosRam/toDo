@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../screens/todos_overview_screen.dart';
 import '../providers/auth.dart';
 
 enum AuthMode { Signup, Login }
@@ -62,6 +63,8 @@ class _AuthScreenState extends State<AuthScreen> {
         await Provider.of<Auth>(context, listen: false).signup(
             _authData['name']!, _authData['email']!, _authData['password']!);
       }
+
+      Navigator.of(context).pushReplacementNamed(ToDosOverviewScreen.routeName);
     } catch (error) {
       _showErrorDialog("An error occured");
     }
@@ -103,13 +106,15 @@ class _AuthScreenState extends State<AuthScreen> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  TextFormField(
-                    decoration: const InputDecoration(labelText: 'Name'),
-                    keyboardType: TextInputType.name,
-                    onSaved: (value) {
-                      _authData['name'] = value!;
-                    },
-                  ),
+                  _authMode == AuthMode.Signup
+                      ? TextFormField(
+                          decoration: const InputDecoration(labelText: 'Name'),
+                          keyboardType: TextInputType.name,
+                          onSaved: (value) {
+                            _authData['name'] = value!;
+                          },
+                        )
+                      : Container(),
                   TextFormField(
                     decoration: const InputDecoration(labelText: 'email'),
                     onSaved: (value) {

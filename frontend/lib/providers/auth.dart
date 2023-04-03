@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Auth with ChangeNotifier {
   String? _token;
@@ -23,6 +24,14 @@ class Auth with ChangeNotifier {
           },
         ),
       );
+      if (json.decode(response.body)['error'] != null) {
+        throw Error();
+      }
+
+      final jwt = json.decode(response.body)['token'];
+
+      final prefs = await SharedPreferences.getInstance();
+      prefs.setString('token', jwt);
     } catch (error) {
       rethrow;
     }
@@ -32,11 +41,17 @@ class Auth with ChangeNotifier {
     final url = Uri.parse("http://10.0.2.2:8000/api/v1/users/login");
 
     try {
+      final prefs = await SharedPreferences.getInstance();
+      if (!prefs.containsKey('token')) {
+        throw Error();
+      }
+
+      var jwt = prefs.getString('token');
+
       final response = await http.post(
         url,
         headers: <String, String>{
-          "Authorization":
-              'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MTVkYWI2OWQwNmU0NWI5NDgxODhlMSIsImlhdCI6MTY3OTE1NDEzMCwiZXhwIjoxNjg2OTMwMTMwfQ.7QABQBUFGrQFuyu0cXCEvGJK-qf2K2hFDjeM_AeRLh4',
+          "Authorization": 'Bearer $jwt',
           'Content-Type': 'application/json'
         },
         body: json.encode(
@@ -46,6 +61,16 @@ class Auth with ChangeNotifier {
           },
         ),
       );
+      if (json.decode(response.body)['error'] != null) {
+        throw Error();
+      }
+
+      jwt = json.decode(response.body)['token'];
+      prefs.setString('token', jwt!);
+
+      if (!prefs.containsKey('token')) {
+        throw Error();
+      }
     } catch (error) {
       rethrow;
     }

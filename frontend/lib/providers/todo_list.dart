@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/todo.dart';
 
@@ -16,12 +17,15 @@ class TodoList with ChangeNotifier {
     try {
       final url = Uri.parse("http://10.0.2.2:8000/api/v1/todo/");
 
+      final prefs = await SharedPreferences.getInstance();
+      final jwt = prefs.getString('token');
+      print(jwt);
+
       final response = await http.get(
         url,
         headers: <String, String>{
           'Content-Type': 'application/json',
-          'Authorization':
-              'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MmFkYTMzNzFjNGY0MWE5NDE5NGJjNiIsImlhdCI6MTY4MDUzMDEwNiwiZXhwIjoxNjg4MzA2MTA2fQ.WTrsjcTYgTl-xJDeSGnZvUeYepmCcZRtOwFGvZXMrKM'
+          'Authorization': 'Bearer $jwt'
         },
       );
 
@@ -55,12 +59,14 @@ class TodoList with ChangeNotifier {
     try {
       final url = Uri.parse("http://10.0.2.2:8000/api/v1/todo/$id");
 
+      final prefs = await SharedPreferences.getInstance();
+      final jwt = prefs.getString('token');
+
       await http.delete(
         url,
         headers: <String, String>{
           'Content-Type': 'application/json',
-          'Authorization':
-              'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MmFkYTMzNzFjNGY0MWE5NDE5NGJjNiIsImlhdCI6MTY4MDUzMDEwNiwiZXhwIjoxNjg4MzA2MTA2fQ.WTrsjcTYgTl-xJDeSGnZvUeYepmCcZRtOwFGvZXMrKM'
+          'Authorization': 'Bearer $jwt'
         },
       );
 
@@ -78,12 +84,15 @@ class TodoList with ChangeNotifier {
   Future<void> createToDo(String title) async {
     try {
       final url = Uri.parse("http://10.0.2.2:8000/api/v1/todo/");
+
+      final prefs = await SharedPreferences.getInstance();
+      final jwt = prefs.getString('token');
+
       final response = await http.post(
         url,
         headers: <String, String>{
           'Content-Type': 'application/json',
-          'Authorization':
-              'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MmFkYTMzNzFjNGY0MWE5NDE5NGJjNiIsImlhdCI6MTY4MDUzMDEwNiwiZXhwIjoxNjg4MzA2MTA2fQ.WTrsjcTYgTl-xJDeSGnZvUeYepmCcZRtOwFGvZXMrKM'
+          'Authorization': 'Bearer $jwt'
         },
         body: json.encode({
           'title': title,
