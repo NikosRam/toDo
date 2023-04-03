@@ -32,21 +32,6 @@ Check the corresponding Backend package in the Repository.
 - The delete IconButton on the right hand side of the ToDo Tile sends a delete request for the specific todo and is therefore also removed instantly from the UI.
 - A new ToDo is created when filling the ToDo title and submitting the Form from the Add new ToDo Screen.
 
-
-
-
-
-## Login/SignUp Screen
-
-![Login](https://raw.githubusercontent.com/NikosRam/toDo/main/toDoScreenshots/Screenshot%202023-04-04%20000112.png?token=GHSAT0AAAAAAB464FWGFPGE5TRXVCYVOKDCZBLIVBQ)
-
-![Login](https://raw.githubusercontent.com/NikosRam/toDo/main/toDoScreenshots/Screenshot%202023-04-04%20000149.png?token=GHSAT0AAAAAAB464FWHNG2E6OS6IID7MBD4ZBLIVXA)
-
-## ToDos Overview
-
-![Overview](https://raw.githubusercontent.com/NikosRam/toDo/main/toDoScreenshots/Screenshot%202023-04-04%20002155.png?token=GHSAT0AAAAAAB464FWGKFGSVMTIGMI4M3RGZBLIWPA)
-
-
 ## Lessons Learned
 
 This simple fullstack project is enough for somebody to understand RESTful APIs thoroughly.
