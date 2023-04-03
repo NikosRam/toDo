@@ -9,7 +9,6 @@ class ToDosOverviewScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Scaffold(
       appBar: PrimaryAppBar(),
-      drawer: Placeholder(),
       body: Placeholder(),
     );
   }
